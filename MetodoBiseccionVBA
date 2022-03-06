@@ -1,0 +1,131 @@
+Sub MetodoBiseccion()
+
+Dim x1, x2, xm, Fx1, Fx2, Fxm, Fx1Fxm, FmFx2, ErrorV, ErrorP, ErrorBiseccion As Double
+Dim Interaciones, Pruebas As Integer
+
+
+Iteraciones = 2
+ErrorBiseccion = 1
+
+Do While ErrorBiseccion > 0.000001
+
+
+Range("A" & Iteraciones).Value = Iteraciones - 2
+
+    
+     If (Iteraciones <> 2) Then
+            If (Range("I" & Iteraciones - 1).Value < 0) Then
+                Range("B" & Iteraciones).Value = Range("D" & Iteraciones - 1).Value
+                
+            Else
+                Range("B" & Iteraciones).Value = Range("B" & Iteraciones - 1).Value
+                
+            End If
+            
+            If (Range("I" & Iteraciones - 1).Value < 0) Then
+                Range("C" & Iteraciones).Value = Range("C" & Iteraciones - 1).Value
+                
+            Else
+                Range("C" & Iteraciones).Value = Range("D" & Iteraciones - 1).Value
+                
+            End If
+            
+     End If
+     
+    
+    x1 = Range("B" & Iteraciones).Value
+    x2 = Range("C" & Iteraciones).Value
+    
+    xm = (x1 + x2) / 2
+    Range("D" & Iteraciones).Value = xm
+    
+    Fx1 = (x1 ^ 10) - 1
+    Range("E" & Iteraciones).Value = Fx1
+    
+    Fx2 = (x2 ^ 10) - 1
+    Range("F" & Iteraciones).Value = Fx2
+    
+    Fxm = (xm ^ 10) - 1
+    Range("G" & Iteraciones).Value = Fxm
+    
+    Fx1Fxm = Fx1 * Fxm
+    Range("H" & Iteraciones).Value = Fx1Fxm
+    
+    FmFx2 = Fxm * Fx2
+    Range("I" & Iteraciones).Value = FmFx2
+    
+    ErrorV = Abs(1 - xm)
+    Range("J" & Iteraciones).Value = ErrorV
+    
+    If (Iteraciones = 2) Then
+        ErrorP = 0
+    
+    Else
+        ErrorP = 100 * Abs((Range("D" & Iteraciones - 1).Value - Range("D" & Iteraciones).Value) / Range("D" & Iteraciones - 1).Value)
+    
+    End If
+        
+    Range("K" & Iteraciones).Value = ErrorP
+        
+    
+    
+    ErrorBiseccion = (x2 - x1) / (2 ^ ((Iteraciones - 2) + 1))
+    Range("L" & Iteraciones).Value = ErrorBiseccion
+    
+    Iteraciones = Iteraciones + 1
+ 
+    
+    
+Loop
+Range("O6").Select
+    ActiveCell.FormulaR1C1 = "Javier Castillo"
+    Range("P6").Select
+    ActiveCell.FormulaR1C1 = "5190-19-7011"
+    Range("P7").Select
+    Columns("O:O").EntireColumn.AutoFit
+    Columns("P:P").EntireColumn.AutoFit
+    Range("O6:P6").Select
+    Selection.Font.Bold = True
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent5
+        .TintAndShade = -0.249977111117893
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Font
+        .ThemeColor = xlThemeColorDark1
+        .TintAndShade = 0
+    End With
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent5
+        .TintAndShade = 0.399975585192419
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Font
+        .ThemeColor = xlThemeColorLight1
+        .TintAndShade = 0
+    End With
+    Range("L12").Select
+
+MsgBox "Encotramos el error de Biseccion menor a 10^-6", vbOKOnly, "Javier Castillo 5190-19-7011"
+
+
+End Sub
+
+
+Sub Borrar()
+Range("A3:L3").Select
+Range(Selection, Selection.End(xlDown)).Select
+Selection.ClearContents
+
+
+Range("D2:L2").ClearContents
+Range("A2").ClearContents
+Range("B2").Select
+
+
+
+End Sub
